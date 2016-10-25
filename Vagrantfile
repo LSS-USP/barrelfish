@@ -11,6 +11,6 @@ Vagrant.configure("2") do |config|
      vb.memory = "2048"
     end
 
-    barrelfish.vm.provision 'shell', privileged: true, keep_color: true, path: 'vagrant/provision.sh'
+    barrelfish.vm.provision 'shell', privileged: false, keep_color: true, path: 'vagrant/provision.sh'
   end
 end
