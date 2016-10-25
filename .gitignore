@@ -41,3 +41,6 @@ bin/
 
 # clang
 .clang_complete
+
+# Vagrant
+.vagrant/
