@@ -87,15 +87,16 @@ driver entails, we will look at its Hakefile. Hakefiles are the declarative
 description of a how a program is built in Barrelfish and what its
 dependencies are. If you need more informations on our build system, you
 should have a look at the Hake technote~\cite{btn003-hake}, which provides a
-detailed description of Hake, the Barrelfish build system. We will look at the
-Hakefile for the FDIF driver in Listing~\ref{lst:hakefile} (a Haskell program,
-really) and explain what it means for the driver program. \varname{cFiles} is
-a list of C source files that are compiled and linked for this driver. In our
-case, we use hake to just search for every file that has a "c" file extension
-in the current directory and return this as a list of files for
-\varname{cFiles}. If you go and look at \pathname{usr/drivers/omap44xx/fdif}
-you will find that this will encompass only two files, \pathname{fdif.c} and
-\pathname{picture.c}.
+detailed description of Hake, the Barrelfish build system.
+
+We will look at the Hakefile for the FDIF driver in Listing~\ref{lst:hakefile}
+(a Haskell program, really) and explain what it means for the driver program.
+\varname{cFiles} is a list of C source files that are compiled and linked for
+this driver. In our case, we use hake to just search for every file that has a
+"c" file extension in the current directory and return this as a list of files
+for \varname{cFiles}. If you go and look at
+\pathname{usr/drivers/omap44xx/fdif} you will find that this will encompass
+only two files, \pathname{fdif.c} and \pathname{picture.c}.
 
 The next attribute, \varname{mackerelDevices}, contains a list Mackerl files,
 these are devices that we have specified in our domain specific language
@@ -176,7 +177,7 @@ access the device in your address space. There is also the issue of how, and
 which programs we allow access to what device registers. We will discuss this
 in the next chapter.
 
-For the the FDIF device, we can receive an interrupt from the device in case
+For the FDIF device, we can receive an interrupt from the device in case
 the face processing is done. Since we run in user space, we have to invoke a
 system call to register for the interrupt in the kernel. Once the interrupt
 arrives, the kernel will use the message passing infrastructure of Barrelfish
@@ -221,23 +222,24 @@ clients to query and reason about this knowledge.
 
 On x86 architectures, the SKB is implemented using the ECLiPSe logic and
 constraint programming (CLP) engine. The SKB was built as a part of Adrian
-Sch\"upbach's Phd thesis \cite{}, available on \url{barrelfish.org}. In this
-technote we briefly cover the main aspects. The SKB provides two different
-interfaces to clients. One of them is a direct way to access the Prolog query
-engine of the ECLiPSe runtime. This allows you to query for facts (i.e.,
-knowledge) about the system in a very generic and flexible way. You can find
-an API to access the SKB in \pathname{lib/skb}. The other interface is a key--value storage engine, called Octopus, implemented in combination with
-the ECLiPSe engine. Octopus is used to provide various functionality in
-Barrelfish. The key--value store also offers as a publish--subscribe mechanism
-based for stored records. It allows subscribers to receive events in case
-of state changes in the system. We use Octopus to implement various
-functionality in the system such as a nameserver. The system also uses Octopus
-for device related events, if PCI devices are found in the system or CPUs
-are discovered for example. In most cases the device manager, which we will
-introduce in the next chapter, will handle these events for you. However, some
-subsystems such as USB, use Octopus directly to receive events about
-hotplugged devices. You can find the API to interact with the Octopus service
-in \pathname{lib/octopus/client}.
+Sch\"upbach's Phd thesis \cite{btn014-skb}, available on \url{barrelfish.org}.
+In this technote we briefly cover the main aspects. The SKB provides two
+different interfaces to clients. One of them is a direct way to access the
+Prolog query engine of the ECLiPSe runtime. This allows you to query for facts
+(i.e., knowledge) about the system in a very generic and flexible way. You can
+find an API to access the SKB in \pathname{lib/skb}. The other interface is a
+key--value storage engine, called Octopus, implemented in combination with the
+ECLiPSe engine. Octopus is used to provide various functionality in Barrelfish.
+The key--value store also offers as a publish--subscribe mechanism based for
+stored records. It allows subscribers to receive events in case of state
+changes in the system. We use Octopus to implement various functionality in the
+system such as a nameserver. The system also uses Octopus for device related
+events, if PCI devices are found in the system or CPUs are discovered for
+example. In most cases the device manager, which we will introduce in the next
+chapter, will handle these events for you. However, some subsystems such as
+USB, use Octopus directly to receive events about hotplugged devices. You can
+find the API to interact with the Octopus service in
+\pathname{lib/octopus/client}.
 
 A documentation of the facts stored in the SKB is on the Barrelfish
 Wiki at \url{http://wiki.barrelfish.org/}.
@@ -267,7 +269,7 @@ Kaluga is the device manager in Barrelfish. Its responsibility is to manage
 the periperhals of a system. That encompasses starting the correct drivers,
 once a device is discovered, in the right order and making sure that each driver
 has the permissions (capabilities) to access the device' memory areas
-or I/O ports. In this chapter wewill learn how Kaluga interacts with the
+or I/O ports. In this chapter we will learn how Kaluga interacts with the
 rest of the system for device discovery and driver start-up.
 
 For reasons stated in Section~\ref{sec:simpleskb} we currently do not have the
